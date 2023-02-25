@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import css from './contactsFilter.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setFilter } from '../../../redux/filter/filter-slice';
@@ -26,15 +25,6 @@ const ContactsFilter = () => {
       ></input>
     </div>
   );
-};
-
-ContactsFilter.propTypes = {
-  onInputChange: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired,
-};
-
-ContactsFilter.defaultProps = {
-  filter: '',
 };
 
 export default ContactsFilter;
