@@ -1,17 +1,15 @@
+import ContactsListItem from './ContactsListItem';
+import { getFilteredContacts } from '../../../redux/contacts/contacts-selectors';
+import { useSelector } from 'react-redux';
+
 import PropTypes from 'prop-types';
 import css from './contactsList.module.css';
 
-import ContactsListItem from './ContactsListItem';
+const ContactsList = () => {
+  const filteredContacts = useSelector(getFilteredContacts);
 
-const ContactsList = ({ deleteContact, acceptedContacts }) => {
-  const allContacts = acceptedContacts.map(({ id, name, number }) => (
-    <ContactsListItem
-      key={id}
-      id={id}
-      deleteContact={deleteContact}
-      name={name}
-      number={number}
-    />
+  const allContacts = filteredContacts.map(({ id, name, number }) => (
+    <ContactsListItem key={id} id={id} name={name} number={number} />
   ));
   return <ul className={css.ul}>{allContacts}</ul>;
 };

@@ -1,17 +1,41 @@
+import { useDispatch, useSelector } from 'react-redux';
+
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { getAllContacts } from '../../../redux/contacts/contacts-selectors';
+import { addContact } from '../../../redux/contacts/contacts-slice';
+
 import css from './contactsForm.module.css';
 
-const ContactsForm = ({ onSubmit }) => {
+const ContactsForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
+  const dispatch = useDispatch();
+  const contacts = useSelector(getAllContacts);
+
   const handleSubmit = event => {
     event.preventDefault();
-    onSubmit({ name, number });
+
+    if (isAlreadyExists(name)) {
+      return alert(`${name} is already in your contacts!`);
+    }
+
+    const action = addContact({ name, number });
+    dispatch(action);
     setName('');
     setNumber('');
+  };
+
+  const isAlreadyExists = searchName => {
+    if (
+      contacts.find(contact => {
+        return contact.name.toLowerCase() === searchName.toLowerCase();
+      })
+    ) {
+      return true;
+    }
   };
 
   return (
